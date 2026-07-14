@@ -1,13 +1,205 @@
+:root {
+  --bg-color: #f8fafc;
+  --node-bg: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #cbd5e1;
+  --primary: #4f46e5;
+  --handle-bg: #818cf8;
+  --handle-border: #ffffff;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius: 8px;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-main);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.node-base {
+  background: var(--node-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 0;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.node-base:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.node-header {
+  background: #f1f5f9;
+  padding: 8px 12px;
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+}
+
+.node-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.node-content label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-muted);
+  font-weight: 500;
+  width: 100%;
+}
+
+.node-content input, .node-content select, .node-content textarea {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 12px;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.node-content input:focus, .node-content select:focus, .node-content textarea:focus {
+  border-color: var(--primary);
+}
+
+/* Handles */
+.react-flow__handle.handle {
+  width: 10px;
+  height: 10px;
+  background-color: var(--handle-bg);
+  border: 2px solid var(--handle-border);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.react-flow__handle.handle:hover {
+  transform: scale(1.5);
+  background-color: var(--primary);
+}
+
+.source-handle {
+  right: -5px;
+}
+
+.target-handle {
+  left: -5px;
+}
+
+/* Delete button styling */
+.node-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.node-delete-btn:hover {
+  color: #ef4444;
+}
+
+/* Multi-Select Highlight */
+.react-flow__node.selected .node-base {
+  border: 2px solid #6366f1;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+}
+
+.react-flow__node.selected .node-base:hover {
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.5);
+}
+
+/* Edge Delete Button */
+.edge-delete-btn {
+  background: var(--node-bg);
+  border: 1px solid var(--border-color);
+  color: #ef4444;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+}
+
+.edge-delete-btn:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+  transform: scale(1.1);
+}
+
+/* Make React Flow edge updaters highly visible */
+.react-flow__edge.selected .react-flow__edgeupdater {
+  fill: #6366f1; /* Indigo color to match selection */
+  stroke: #ffffff;
+  stroke-width: 2px;
+  r: 6; /* Visible radius */
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.react-flow__edge.selected .react-flow__edgeupdater:hover {
+  fill: #4f46e5;
+  r: 10; /* Expand on hover */
+}
+
+/* Darker Edge Lines & Temporary Connection Line */
+.react-flow__edge-path,
+.react-flow__connection-path {
+  stroke: #475569 !important; /* Dark Slate */
+  stroke-width: 2.5px !important;
+}
+
+/* Fix for Hollow Arrow markers */
+.react-flow__arrowhead polyline,
+.react-flow__arrowhead path {
+  fill: none !important;
+  stroke: #475569 !important;
+  stroke-width: 1.5px !important;
+}
+
+/* Selected Edge Line Highlight */
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #6366f1 !important; /* Indigo */
+  stroke-width: 3.5px !important;
+}
+
+.react-flow__edge.selected .react-flow__arrowhead polyline,
+.react-flow__edge.selected .react-flow__arrowhead path {
+  stroke: #6366f1 !important;
 }

@@ -25,3 +25,5 @@ yarn-error.log*
 # Instructions
 instructions.txt
 VectorShift - Frontend Technical Assessment Instructions.pdf
+frontend/node_modules/
+backend/__pycache__/
